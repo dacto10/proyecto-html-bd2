@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body onload="loadDatabase()">
+    <div class="home">
+        <div class="home__options">
+            <div class="home__option">
+                <div>
+                    <h2><i class="fa fa-picture-o"></i> Pictures Album</h2>
+                    <div>
+                        <button onclick="uploadImg()"><i class="fa fa-plus"></i></button>
+                        <button onclick="toggleContainer()"><i class="material-icons">keyboard_arrow_down</i></button>
+                    </div>
+                </div>
+                <div class="home__option-content" id="imgContainer">
+                    
+                </div>
+            </div>
+            <div class="home__option">
+                <div>
+                    <h2><i class="fa fa-video-camera"></i> Video Album</h2>
+                    <div>
+                        <button><i class="fa fa-plus"></i></button>
+                        <button><i class="material-icons">keyboard_arrow_down</i></button>
+                    </div>
+                </div>
+                <div class="home__option-content">
+                    
+                </div>
+            </div>
+            <div class="home__option">
+                <div>
+                    <h2><i class="fa fa-music"></i> Audio Album</h2>
+                    <div>
+                        <button><i class="fa fa-plus"></i></button>
+                        <button><i class="material-icons">keyboard_arrow_down</i></button>
+                    </div>
+                </div>
+                <div class="home__option-content">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="file" class="invisible-input" id="imageUploader" oninput="saveImg()">
+    <input type="file" class="invisible-input" id="videoUploader" oninput="saveVideo()">
+    <input type="file" class="invisible-input" id="audioUploader" oninput="saveAudio()">
+    <script src="../scripts/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
