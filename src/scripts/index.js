@@ -2,8 +2,8 @@ window.images = [];
 window.videos = [];
 window.audios = [];
 
-const uploadImg = () => {
-    document.getElementById("imageUploader").click();
+const upload = (type) => {
+    document.getElementById(`${type}Uploader`).click();
 }
 
 const toBase64 = (file) => new Promise((resolve, reject) => {
@@ -21,39 +21,83 @@ const saveImg = async () => {
     window.images.push(img);
     const request = window.indexedDB.open("Gallery", 3);
     request.onerror = (event) => window.alert("Update failed");
-    let db;
-    request.onsuccess = (event) => db = event.target.result; 
-    const transaction = db.transaction(["images"], "readwrite");
-    transaction.objectStore("images").add(img);
+    request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["images"], "readwrite");
+        transaction.objectStore("images").add(img);
+    }
     document.getElementById("imgContainer").innerHTML = "";
-    showImg();
+    showFiles("img", window.images);
+}
+
+const saveVideo = async () => {
+    const input = document.getElementById("videoUploader");
+    const video = await toBase64(input.files[0]);
+    input.type = "text";
+    input.type = "file";
+    window.videos.push(video);
+    const request = window.indexedDB.open("Gallery", 3);
+    request.onerror = (event) => window.alert("Update failed");
+    request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["videos"], "readwrite");
+        transaction.objectStore("videos").add(video);
+    }
+    document.getElementById("videoContainer").innerHTML = "";
+    showFiles("video", window.videos);
+}
+
+const saveAudio = async () => {
+    const input = document.getElementById("audioUploader");
+    const audio = await toBase64(input.files[0]);
+    input.type = "text";
+    input.type = "file";
+    window.audios.push(audio);
+    const request = window.indexedDB.open("Gallery", 3);
+    request.onerror = (event) => window.alert("Update failed");
+    request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["audios"], "readwrite");
+        transaction.objectStore("audios").add(audio);
+    }
+    document.getElementById("audioContainer").innerHTML = "";
+    showFiles("audio", window.audios);
 }
 
 const getData = () => {
     const request = window.indexedDB.open("Gallery", 3);
     request.onerror = (event) => window.alert("Update failed");
-    let db;
     request.onsuccess = (event) => {
-        db = event.target.result;
-        console.log(event.target);
+        const db = request.result;
+        let req = db.transaction(["images"], "readwrite").objectStore("images").getAll();
+        req.onsuccess = () => {
+            window.images = req.result;
+            req = db.transaction(["videos"], "readwrite").objectStore("videos").getAll();
+            req.onsuccess = () => {
+                window.videos = req.result;
+                req = db.transaction(["audios"], "readwrite").objectStore("audios").getAll();
+                req.onsuccess = () => {
+                    window.audios = req.result;
+                    showFiles("img", window.images);
+                    showFiles("video", window.videos);
+                    showFiles("audio", window.audios);
+                }
+            }
+        }   
     }
-    console.log(db);
-    window.images = db.transaction(["images"], "readwrite").getAll();
-    window.videos = db.transaction(["videos"], "readwrite").getAll();
-    window.audios = db.transaction(["audios"], "readwrite").getAll();
-    showImg();
 };
 
-const showImg = () => {
-    window.images.forEach((element) => {
-        const img = document.createElement("img");
-        img.src = element;
-        document.getElementById("imgContainer").appendChild(img);
+const showFiles = (fileType, source) => {
+    source.forEach((element) => {
+        const file = document.createElement(fileType);
+        file.src = element;
+        if (fileType === "video" || fileType === "audio") file.controls = true;
+        document.getElementById(`${fileType}Container`).appendChild(file);
     });
 }
 
-const toggleContainer = () => {
-    const container = document.getElementById("imgContainer");
+const toggleContainer = (id) => {
+    const container = document.getElementById(id);
     if (container.style.display === "grid") {
         container.style.display = "none";
     } else {
@@ -66,9 +110,9 @@ const loadDatabase = () => {
     request.onerror = (event) => window.alert("Creation failed");
     request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        db.createObjectStore("images", { autoIncrement : true });
-        db.createObjectStore("videos", { autoIncrement : true });
-        db.createObjectStore("audios", { autoIncrement : true });
+        db.createObjectStore("images", { autoIncrement: true });
+        db.createObjectStore("videos", { autoIncrement: true });
+        db.createObjectStore("audios", { autoIncrement: true });
     }
     getData();
 }
