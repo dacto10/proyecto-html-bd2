@@ -8,50 +8,77 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body onload="loadDatabase()">
-    <div class="home">
-        <div class="home__options">
-            <div class="home__option">
-                <div>
-                    <h2><i class="fa fa-picture-o"></i> Pictures Album</h2>
+    <body onload="loadDatabase()">
+        <div class="home">
+            <div class="home__options">
+                <div class="home__option">
                     <div>
-                        <button onclick="upload('img')"><i class="fa fa-plus"></i></button>
-                        <button onclick="toggleContainer('imgContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                        <h2><i class="fa fa-picture-o"></i> Pictures Album</h2>
+                        <div>
+                            <button class="home__btn" onclick="upload('img')">SUBIR DESDE EL ORDENADOR</button>
+                            <button class="home__btn" onclick="openModal('image')">SUBIR DESDE LA WEB</button>
+                            <button onclick="toggleContainer('imgContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                        </div>
+                    </div>
+                    <div class="home__option-content" id="imgContainer">
+                        
                     </div>
                 </div>
-                <div class="home__option-content" id="imgContainer">
-                    
+                <div class="home__option">
+                    <div>
+                        <h2><i class="fa fa-video-camera"></i> Video Album</h2>
+                        <div>
+                            <button class="home__btn" onclick="upload('video')">SUBIR DESDE EL ORDENADOR</button>
+                            <button class="home__btn" onclick="openModal('video')">SUBIR DESDE LA WEB</button>
+                            <button onclick="toggleContainer('videoContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                        </div>
+                    </div>
+                    <div class="home__option-content" id="videoContainer">
+                        
+                    </div>
+                </div>
+                <div class="home__option">
+                    <div>
+                        <h2><i class="fa fa-music"></i> Audio Album</h2>
+                        <div>
+                            <button class="home__btn" onclick="upload('audio')">SUBIR DESDE EL ORDENADOR</button>
+                            <button class="home__btn" onclick="openModal('audio')">SUBIR DESDE LA WEB</button>
+                            <button onclick="toggleContainer('audioContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                        </div>
+                    </div>
+                    <div class="home__option-content" id="audioContainer">
+                        
+                    </div>
                 </div>
             </div>
-            <div class="home__option">
+            <div class="home__form" id="imageModal">
+                <h2>Ingrese una URL</h2>
+                <i class="material-icons" onclick="closeModal('image')">close</i>
                 <div>
-                    <h2><i class="fa fa-video-camera"></i> Video Album</h2>
-                    <div>
-                        <button onclick="upload('video')"><i class="fa fa-plus"></i></button>
-                        <button onclick="toggleContainer('videoContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
-                    </div>
-                </div>
-                <div class="home__option-content" id="videoContainer">
-                    
+                    <input type="text" id="imageInput">
+                    <button class="home__btn home__btn--mini">AGREGAR</button>
                 </div>
             </div>
-            <div class="home__option">
+            <div class="home__form" id="videoModal">
+                <h2>Ingrese una URL</h2>
+                <i class="material-icons" onclick="closeModal('video')">close</i>
                 <div>
-                    <h2><i class="fa fa-music"></i> Audio Album</h2>
-                    <div>
-                        <button onclick="upload('audio')"><i class="fa fa-plus"></i></button>
-                        <button onclick="toggleContainer('audioContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
-                    </div>
+                    <input type="text" id="videoInput">
+                    <button class="home__btn home__btn--mini">AGREGAR</button>
                 </div>
-                <div class="home__option-content" id="audioContainer">
-                    
+            </div>
+            <div class="home__form" id="audioModal">
+                <h2>Ingrese una URL</h2>
+                <i class="material-icons" onclick="closeModal('audio')">close</i>
+                <div>
+                    <input type="text" id="audioInput">
+                    <button class="home__btn home__btn--mini">AGREGAR</button>
                 </div>
             </div>
         </div>
-    </div>
-    <input type="file" class="invisible-input" id="imgUploader" oninput="saveImg()">
-    <input type="file" class="invisible-input" id="videoUploader" oninput="saveVideo()">
-    <input type="file" class="invisible-input" id="audioUploader" oninput="saveAudio()">
-    <script src="../scripts/index.js"></script>
-</body>
+        <input type="file" class="invisible-input" id="imgUploader" oninput="saveImg()">
+        <input type="file" class="invisible-input" id="videoUploader" oninput="saveVideo()">
+        <input type="file" class="invisible-input" id="audioUploader" oninput="saveAudio()">
+        <script src="../scripts/index.js"></script>
+    </body>
 </html>

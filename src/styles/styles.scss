@@ -12,12 +12,38 @@ $dark: rgb(74, 79, 87);
 }
 
 .home {
+    position: relative;
     font-family: Arial, Helvetica, sans-serif;
-    padding: 50px 100px;
+    padding: 50px 150px;
+    @include flex(column, initial);
+    align-items: center;
     &__options {
         @include flex(column, row);
         gap: 30px;
         padding: 50px 0;
+        width: 100%;
+    }
+    &__btn {
+        width: 250px!important;
+        color: $light;
+        border-radius: 5px;
+        box-shadow: 5px 10px 8px #888888;
+        background-color: $theme-primary!important;
+        @include flex(row, space-around);
+        align-items: center;
+        i {
+            color: $gray!important;
+        }
+        &:hover {
+            color: $theme-primary-dark;
+        }
+        &--mini {
+            width: 125px!important;
+            border: none;
+            height: 40px;
+            padding: 0;
+            outline: none;
+        }
     }
     &__option {
         align-items: center;
@@ -32,7 +58,7 @@ $dark: rgb(74, 79, 87);
                 @include flex(row, space-between);
             }
             > div {
-                width: 150px;
+                width: 50%;
                 @include flex(row, space-between);
                 align-items: center;
                 button {
@@ -66,9 +92,50 @@ $dark: rgb(74, 79, 87);
         display: none;
         gap: 30px;
         grid-template-columns: repeat(3, 1fr);
-        img, video, audio {
+        img, video{
             width: 100%;
             height: 200px;
+            background-color: $dark;
+        }
+        audio {
+            width: 100%;
+        }
+    }
+    &__form {
+        position: relative;
+        height: 180px;
+        background-color: white;
+        padding: 20px 50px;
+        max-width: 643px;
+        border-radius: 5px;
+        display: none;
+        i {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            cursor: pointer;
+            font-weight: bold;
+            color: $theme-primary;
+        }
+        > div {
+            @include flex(row, initial);
+            align-items: center;
+            input {
+                width: 400px;
+                height: 37px;
+                font-size: 20px;
+                border-radius: 5px;
+                border: solid 1px $gray;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                outline: none;
+                box-shadow: 5px 10px 8px #888888;
+                padding-left: 10px;
+            }
+            button {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }
@@ -99,8 +166,9 @@ button {
     i {
         position: absolute;
         top: 0;
-        right: 0;
+        right: 7px;
         cursor: pointer;
         font-weight: bold;
+        color: $theme-primary;
     }
 }

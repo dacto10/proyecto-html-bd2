@@ -1,9 +1,22 @@
 window.images = [];
 window.videos = [];
 window.audios = [];
+window.imagesURL = [];
+window.videosURL = [];
+window.audiosURL = [];
 
 const upload = (type) => {
     document.getElementById(`${type}Uploader`).click();
+}
+
+const openModal = (type) => {
+    document.getElementsByClassName("home__options")[0].style.display = "none";
+    document.getElementById(`${type}Modal`).style.display = "block";
+}
+
+const closeModal = (type) => {
+    document.getElementsByClassName("home__options")[0].style.display = "flex";
+    document.getElementById(`${type}Modal`).style.display = "none";
 }
 
 const toBase64 = (file) => new Promise((resolve, reject) => {
@@ -78,6 +91,9 @@ const getData = () => {
                 req = db.transaction(["audios"], "readwrite").objectStore("audios").getAll();
                 req.onsuccess = () => {
                     window.audios = req.result;
+                    document.getElementById("imgContainer").innerHTML = "";
+                    document.getElementById("videoContainer").innerHTML = "";
+                    document.getElementById("audioContainer").innerHTML = "";
                     showFiles("img", window.images);
                     showFiles("video", window.videos);
                     showFiles("audio", window.audios);
@@ -95,7 +111,7 @@ const showFiles = (fileType, source) => {
         fileContainer.classList.add("file-container");
         cross.classList.add("material-icons");
         cross.innerHTML = "close";
-        cross.addEventListener("click", deleteFile(fileType, index));
+        cross.addEventListener("click", () => deleteFile(fileType, index));
         file.src = element;
         if (fileType === "video" || fileType === "audio") file.controls = true;
         fileContainer.appendChild(file);
@@ -126,5 +142,21 @@ const loadDatabase = () => {
 }
 
 const deleteFile = (fileType, index) => {
-    
+    fileType = fileType === "img" ? "images" : (fileType === "video" ? "videos" : "audios");
+    const request = window.indexedDB.open("Gallery", 3);
+    request.onerror = (event) => window.alert("Update failed");
+    request.onsuccess = (event) => {
+        const db = request.result;
+        let transaction = db.transaction([`${fileType}`], "readwrite").objectStore(fileType).getAll();
+        transaction.onsuccess = () => {
+            const toReplace = transaction.result.filter((element) => element !== transaction.result[index]);
+            transaction = db.transaction([`${fileType}`], "readwrite").objectStore(fileType).clear();
+            transaction.onsuccess = () => {
+                toReplace.forEach((element) => {
+                    transaction = db.transaction([`${fileType}`], "readwrite").objectStore(fileType).add(element);
+                });
+                getData();
+            }
+        }
+    }
 }
