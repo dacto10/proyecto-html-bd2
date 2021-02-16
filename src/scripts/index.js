@@ -94,16 +94,22 @@ const getData = () => {
                     document.getElementById("imgContainer").innerHTML = "";
                     document.getElementById("videoContainer").innerHTML = "";
                     document.getElementById("audioContainer").innerHTML = "";
-                    showFiles("img", window.images);
-                    showFiles("video", window.videos);
-                    showFiles("audio", window.audios);
+                    document.getElementById("imgContainerUrl").innerHTML = "";
+                    document.getElementById("videoContainerUrl").innerHTML = "";
+                    document.getElementById("audioContainerUrl").innerHTML = "";
+                    showFiles("img", window.images, window.imagesURL);
+                    showFiles("video", window.videos, window.videosURL);
+                    showFiles("audio", window.audios, window.audiosURL);
                 }
             }
         }   
     }
+    window.imagesURL = window.localStorage.getItem("images") !== null ? JSON.parse(window.localStorage.getItem("images")) : [];
+    window.videosURL = window.localStorage.getItem("videos") !== null ? JSON.parse(window.localStorage.getItem("videos")) : []; 
+    window.audiosURL = window.localStorage.getItem("audios") !== null ? JSON.parse(window.localStorage.getItem("audios")) : []; 
 };
 
-const showFiles = (fileType, source) => {
+const showFiles = (fileType, source, sourceURL) => {
     source.forEach((element, index) => {
         const fileContainer = document.createElement("div");
         const file = document.createElement(fileType);
@@ -118,14 +124,28 @@ const showFiles = (fileType, source) => {
         fileContainer.appendChild(cross);
         document.getElementById(`${fileType}Container`).appendChild(fileContainer);
     });
+    sourceURL.forEach((element, index) => {
+        const fileContainer = document.createElement("div");
+        const file = document.createElement(fileType);
+        const cross = document.createElement("i");
+        fileContainer.classList.add("file-container");
+        cross.classList.add("material-icons");
+        cross.innerHTML = "close";
+        cross.addEventListener("click", () => deleteFileURL(fileType, index));
+        file.src = element;
+        if (fileType === "video" || fileType === "audio") file.controls = true;
+        fileContainer.appendChild(file);
+        fileContainer.appendChild(cross);
+        document.getElementById(`${fileType}ContainerUrl`).appendChild(fileContainer);
+    });
 }
 
 const toggleContainer = (id) => {
     const container = document.getElementById(id);
-    if (container.style.display === "grid") {
+    if (container.style.display === "block") {
         container.style.display = "none";
     } else {
-        container.style.display = "grid";
+        container.style.display = "block";
     }
 }
 
@@ -159,4 +179,73 @@ const deleteFile = (fileType, index) => {
             }
         }
     }
+}
+
+const updateLocal = () => {
+    window.localStorage.setItem("images", JSON.stringify(window.imagesURL));
+    window.localStorage.setItem("videos", JSON.stringify(window.videosURL));
+    window.localStorage.setItem("audios", JSON.stringify(window.audiosURL));
+}
+const deleteFileURL = (fileType, index) => {
+    if (fileType === "img") {
+        window.imagesURL = window.imagesURL.filter((element) => element !== window.imagesURL[index]);
+    } else if (fileType === "video") {
+        window.videosURL = window.videosURL.filter((element) => element !== window.videosURL[index]);
+    } else {
+        window.audiosURL = window.audiosURL.filter((element) => element !== window.audiosURL[index]);
+    }
+    updateLocal();
+    document.getElementById("imgContainer").innerHTML = "";
+    document.getElementById("videoContainer").innerHTML = "";
+    document.getElementById("audioContainer").innerHTML = "";
+    document.getElementById("imgContainerUrl").innerHTML = "";
+    document.getElementById("videoContainerUrl").innerHTML = "";
+    document.getElementById("audioContainerUrl").innerHTML = "";
+    showFiles("img", window.images, window.imagesURL);
+    showFiles("video", window.videos, window.videosURL);
+    showFiles("audio", window.audios, window. audiosURL);
+}
+const saveImgURL = () => {
+    window.imagesURL.push(document.getElementById("imageInput").value);
+    document.getElementById("imageInput").value = "";
+    updateLocal();
+    document.getElementById("imgContainer").innerHTML = "";
+    document.getElementById("videoContainer").innerHTML = "";
+    document.getElementById("audioContainer").innerHTML = "";
+    document.getElementById("imgContainerUrl").innerHTML = "";
+    document.getElementById("videoContainerUrl").innerHTML = "";
+    document.getElementById("audioContainerUrl").innerHTML = "";
+    showFiles("img", window.images, window.imagesURL);
+    showFiles("video", window.videos, window.videosURL);
+    showFiles("audio", window.audios, window. audiosURL);
+}
+
+const saveVideoURL = () => {
+    window.videosURL.push(document.getElementById("videoInput").value);
+    document.getElementById("videoInput").value = "";
+    updateLocal();
+    document.getElementById("imgContainer").innerHTML = "";
+    document.getElementById("videoContainer").innerHTML = "";
+    document.getElementById("audioContainer").innerHTML = "";
+    document.getElementById("imgContainerUrl").innerHTML = "";
+    document.getElementById("videoContainerUrl").innerHTML = "";
+    document.getElementById("audioContainerUrl").innerHTML = "";
+    showFiles("img", window.images, window.imagesURL);
+    showFiles("video", window.videos, window.videosURL);
+    showFiles("audio", window.audios, window. audiosURL);
+}
+
+const saveAudioURL = () => {
+    window.audiosURL.push(document.getElementById("audioInput").value);
+    document.getElementById("audioInput").value = "";
+    updateLocal();
+    document.getElementById("imgContainer").innerHTML = "";
+    document.getElementById("videoContainer").innerHTML = "";
+    document.getElementById("audioContainer").innerHTML = "";
+    document.getElementById("imgContainerUrl").innerHTML = "";
+    document.getElementById("videoContainerUrl").innerHTML = "";
+    document.getElementById("audioContainerUrl").innerHTML = "";
+    showFiles("img", window.images, window.imagesURL);
+    showFiles("video", window.videos, window.videosURL);
+    showFiles("audio", window.audios, window. audiosURL);
 }

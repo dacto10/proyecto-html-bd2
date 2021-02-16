@@ -12,42 +12,63 @@
         <div class="home">
             <div class="home__options">
                 <div class="home__option">
-                    <div>
-                        <h2><i class="fa fa-picture-o"></i> Pictures Album</h2>
-                        <div>
+                    <div class="home__option-title">
+                        <h2><i class="fa fa-picture-o"></i>Galería de fotos</h2>
+                        <div class="home__option-buttons">
                             <button class="home__btn" onclick="upload('img')">SUBIR DESDE EL ORDENADOR</button>
                             <button class="home__btn" onclick="openModal('image')">SUBIR DESDE LA WEB</button>
-                            <button onclick="toggleContainer('imgContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                            <button onclick="toggleContainer('imgDropdown')"><i class="material-icons">keyboard_arrow_down</i></button>
                         </div>
                     </div>
-                    <div class="home__option-content" id="imgContainer">
+                    <div class="home__dropdown" id="imgDropdown">
+                        <h3>Subidos desde el ordenador</h3>
+                        <div class="home__option-content" id="imgContainer">
                         
+                        </div>
+                        <h3>Subidos desde la web</h3>
+                        <div class="home__option-content" id="imgContainerUrl">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="home__option">
-                    <div>
-                        <h2><i class="fa fa-video-camera"></i> Video Album</h2>
-                        <div>
+                    <div class="home__option-title">
+                        <h2><i class="fa fa-video-camera"></i>Galería de videos</h2>
+                        <div class="home__option-buttons">
                             <button class="home__btn" onclick="upload('video')">SUBIR DESDE EL ORDENADOR</button>
                             <button class="home__btn" onclick="openModal('video')">SUBIR DESDE LA WEB</button>
-                            <button onclick="toggleContainer('videoContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                            <button onclick="toggleContainer('videoDropdown')"><i class="material-icons">keyboard_arrow_down</i></button>
                         </div>
                     </div>
-                    <div class="home__option-content" id="videoContainer">
+                    <div class="home__dropdown" id="videoDropdown">
+                        <h3>Subidos desde el ordenador</h3>
+                        <div class="home__option-content" id="videoContainer">
                         
+                        </div>
+                        <h3>Subidos desde la web</h3>
+                        <div class="home__option-content" id="videoContainerUrl">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="home__option">
-                    <div>
-                        <h2><i class="fa fa-music"></i> Audio Album</h2>
-                        <div>
+                    <div class="home__option-title">
+                        <h2><i class="fa fa-music"></i>Galería de audios</h2>
+                        <div class="home__option-buttons">
                             <button class="home__btn" onclick="upload('audio')">SUBIR DESDE EL ORDENADOR</button>
                             <button class="home__btn" onclick="openModal('audio')">SUBIR DESDE LA WEB</button>
-                            <button onclick="toggleContainer('audioContainer')"><i class="material-icons">keyboard_arrow_down</i></button>
+                            <button onclick="toggleContainer('audioDropdown')"><i class="material-icons">keyboard_arrow_down</i></button>
                         </div>
                     </div>
-                    <div class="home__option-content" id="audioContainer">
-                        
+                    <div class="home__dropdown" id="audioDropdown">
+                        <h3>Subidos desde el ordenador</h3>
+                        <div class="home__option-content" id="audioContainer">
+                            
+                        </div>
+                        <h3>Subidos desde la web</h3>
+                        <div class="home__option-content" id="audioContainerUrl">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,7 +77,7 @@
                 <i class="material-icons" onclick="closeModal('image')">close</i>
                 <div>
                     <input type="text" id="imageInput">
-                    <button class="home__btn home__btn--mini">AGREGAR</button>
+                    <button class="home__btn home__btn--mini" onclick="saveImgURL()">AGREGAR</button>
                 </div>
             </div>
             <div class="home__form" id="videoModal">
@@ -64,7 +85,7 @@
                 <i class="material-icons" onclick="closeModal('video')">close</i>
                 <div>
                     <input type="text" id="videoInput">
-                    <button class="home__btn home__btn--mini">AGREGAR</button>
+                    <button class="home__btn home__btn--mini" onclick="saveVideoURL()">AGREGAR</button>
                 </div>
             </div>
             <div class="home__form" id="audioModal">
@@ -72,7 +93,7 @@
                 <i class="material-icons" onclick="closeModal('audio')">close</i>
                 <div>
                     <input type="text" id="audioInput">
-                    <button class="home__btn home__btn--mini">AGREGAR</button>
+                    <button class="home__btn home__btn--mini" onclick="saveAudioURL()">AGREGAR</button>
                 </div>
             </div>
         </div>
