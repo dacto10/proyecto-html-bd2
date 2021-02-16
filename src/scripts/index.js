@@ -14,7 +14,7 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
 });
 
 const saveImg = async () => {
-    const input = document.getElementById("imageUploader");
+    const input = document.getElementById("imgUploader");
     const img = await toBase64(input.files[0]);
     input.type = "text";
     input.type = "file";
@@ -88,11 +88,19 @@ const getData = () => {
 };
 
 const showFiles = (fileType, source) => {
-    source.forEach((element) => {
+    source.forEach((element, index) => {
+        const fileContainer = document.createElement("div");
         const file = document.createElement(fileType);
+        const cross = document.createElement("i");
+        fileContainer.classList.add("file-container");
+        cross.classList.add("material-icons");
+        cross.innerHTML = "close";
+        cross.addEventListener("click", deleteFile(fileType, index));
         file.src = element;
         if (fileType === "video" || fileType === "audio") file.controls = true;
-        document.getElementById(`${fileType}Container`).appendChild(file);
+        fileContainer.appendChild(file);
+        fileContainer.appendChild(cross);
+        document.getElementById(`${fileType}Container`).appendChild(fileContainer);
     });
 }
 
@@ -115,4 +123,8 @@ const loadDatabase = () => {
         db.createObjectStore("audios", { autoIncrement: true });
     }
     getData();
+}
+
+const deleteFile = (fileType, index) => {
+    
 }
